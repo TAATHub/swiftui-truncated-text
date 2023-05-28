@@ -11,6 +11,7 @@
 		9A4B239F2A22EE9D00401488 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4B239E2A22EE9D00401488 /* ContentView.swift */; };
 		9A4B23A12A22EE9E00401488 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A4B23A02A22EE9E00401488 /* Assets.xcassets */; };
 		9A4B23A42A22EE9E00401488 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A4B23A32A22EE9E00401488 /* Preview Assets.xcassets */; };
+		9A4B23AB2A22EF9900401488 /* TruncatedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4B23AA2A22EF9900401488 /* TruncatedText.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		9A4B239E2A22EE9D00401488 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9A4B23A02A22EE9E00401488 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9A4B23A32A22EE9E00401488 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		9A4B23AA2A22EF9900401488 /* TruncatedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruncatedText.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 			children = (
 				9A4B239C2A22EE9D00401488 /* TruncatedTextApp.swift */,
 				9A4B239E2A22EE9D00401488 /* ContentView.swift */,
+				9A4B23AA2A22EF9900401488 /* TruncatedText.swift */,
 				9A4B23A02A22EE9E00401488 /* Assets.xcassets */,
 				9A4B23A22A22EE9E00401488 /* Preview Content */,
 			);
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A4B23AB2A22EF9900401488 /* TruncatedText.swift in Sources */,
 				9A4B239F2A22EE9D00401488 /* ContentView.swift in Sources */,
 				9A4B239D2A22EE9D00401488 /* TruncatedTextApp.swift in Sources */,
 			);

@@ -1,19 +1,16 @@
-//
-//  ContentView.swift
-//  TruncatedText
-//
-//  Created by TAAT on 2023/05/28.
-//
-
 import SwiftUI
 
 struct ContentView: View {
+    let text = "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。"
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        VStack(spacing: 40) {
+            Text(text)
+                .lineLimit(3)
+
+            TrancatedText(text,
+                          lineLimit: 3,
+                          ellipsis: .init(text: "More", color: .blue))
         }
         .padding()
     }

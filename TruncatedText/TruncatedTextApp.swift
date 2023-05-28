@@ -1,10 +1,3 @@
-//
-//  TruncatedTextApp.swift
-//  TruncatedText
-//
-//  Created by TAAT on 2023/05/28.
-//
-
 import SwiftUI
 
 @main
