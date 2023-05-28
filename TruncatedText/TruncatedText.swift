@@ -100,6 +100,7 @@ struct TrancatedText: View {
                                     }
                                 }
 
+                                // truncatedTextの更新による再描画はSwiftUIが管理しており、この二分探索の処理による再描画は最終更新後に行われた
                                 truncatedText = String(text.prefix(mid))
                             }
                         }
