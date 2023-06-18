@@ -14,6 +14,7 @@ struct TrancatedText: View {
     let lineSpacing: CGFloat
     let font: UIFont
     let ellipsis: Ellipsis
+    let proxy: GeometryProxy?
 
     private var text: String
     private var ellipsisPrefixText: String {
@@ -37,12 +38,14 @@ struct TrancatedText: View {
         lineLimit: Int,
         lineSpacing: CGFloat = 2,
         font: UIFont = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.body),
-        ellipsis: Ellipsis = Ellipsis()) {
+        ellipsis: Ellipsis = Ellipsis(),
+        proxy: GeometryProxy? = nil) {
         self.text = text
         self.lineLimit = lineLimit
         self.lineSpacing = lineSpacing
         self.font = font
         self.ellipsis = ellipsis
+        self.proxy = proxy
 
         _truncatedText = State(wrappedValue: text)
     }
@@ -68,44 +71,49 @@ struct TrancatedText: View {
                 .background(GeometryReader { visibleTextGeometry in
                     Color.clear
                         .onAppear {
-                            let size = CGSize(width: visibleTextGeometry.size.width, height: .greatestFiniteMagnitude)
-                            let attributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: font]
-
-                            // 二分探索で省略テキストを更新する
-                            // 終了条件: mid == low && mid == high
-                            var low = 0
-                            var heigh = truncatedText.count
-                            var mid = heigh
-
-                            while (heigh - low) > 1 {
-                                // 固定幅に対するテキストの高さを取得するためにNSAttributedStringを用いる
-                                let attributedText = NSAttributedString(
-                                    string: truncatedText + ellipsisPrefixText + ellipsisText,
-                                    attributes: attributes)
-                                let boundRect = attributedText.boundingRect(
-                                    with: size,
-                                    options: NSStringDrawingOptions.usesLineFragmentOrigin,
-                                    context: nil)
-
-                                if boundRect.size.height > visibleTextGeometry.size.height {
-                                    truncated = true
-                                    heigh = mid
-                                    mid = (heigh + low) / 2
-                                } else {
-                                    if mid == text.count {
-                                        break
-                                    } else {
-                                        low = mid
-                                        mid = (low + heigh) / 2
-                                    }
-                                }
-
-                                // truncatedTextの更新による再描画はSwiftUIが管理しており、この二分探索の処理による再描画は最終更新後に行われた
-                                truncatedText = String(text.prefix(mid))
-                            }
+                            searchTruncatedText(width: proxy?.size.width ?? visibleTextGeometry.size.width,
+                                                height: visibleTextGeometry.size.height)
                         }
                 }))
         .font(Font(font))
+    }
+    
+    private func searchTruncatedText(width: CGFloat, height: CGFloat) {
+        let size = CGSize(width: width, height: .greatestFiniteMagnitude)
+        let attributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: font]
+
+        // 二分探索で省略テキストを更新する
+        // 終了条件: mid == low && mid == high
+        var low = 0
+        var heigh = truncatedText.count
+        var mid = heigh
+
+        while (heigh - low) > 1 {
+            // 固定幅に対するテキストの高さを取得するためにNSAttributedStringを用いる
+            let attributedText = NSAttributedString(
+                string: truncatedText + ellipsisPrefixText + ellipsisText,
+                attributes: attributes)
+            let boundRect = attributedText.boundingRect(
+                with: size,
+                options: NSStringDrawingOptions.usesLineFragmentOrigin,
+                context: nil)
+
+            if boundRect.size.height > height {
+                truncated = true
+                heigh = mid
+                mid = (heigh + low) / 2
+            } else {
+                if mid == text.count {
+                    break
+                } else {
+                    low = mid
+                    mid = (low + heigh) / 2
+                }
+            }
+
+            // truncatedTextの更新による再描画はSwiftUIが管理しており、この二分探索の処理による再描画は最終更新後に行われた
+            truncatedText = String(text.prefix(mid))
+        }
     }
 }
 
